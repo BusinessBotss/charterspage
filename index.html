@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reserva tu Charter - Sea Moments</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter :wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background: #f4f4f9;
+      color: #333;
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container {
+      background: #fff;
+      border-radius: 14px;
+      padding: 30px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    select, input, textarea {
+      width: 100%;
+      padding: 12px;
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+    button {
+      width: 100%;
+      padding: 14px;
+      font-size: 1rem;
+      font-weight: 600;
+      background: #25d366;
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    button:hover {
+      background: #1ebe5a;
+    }
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .section-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .checkbox-group label {
+      font-weight: normal;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Reserva tu Charter Personalizado</h1>
+    <form id="charterForm">
+      <!-- Información del Cliente -->
+      <div class="section-title">Información del Cliente</div>
+      <label for="fullname">Nombre completo</label>
+      <input type="text" id="fullname" placeholder="Tu nombre completo" required />
+
+      <label for="email">Correo electrónico</label>
+      <input type="email" id="email" placeholder="ejemplo@correo.com" required />
+
+      <label for="phone">Número de teléfono</label>
+      <input type="tel" id="phone" placeholder="+XX XXX XXX XXXX" required />
+
+      <label for="country">País de residencia</label>
+      <select id="country" required>
+        <option value="" disabled selected>Selecciona tu país</option>
+        <option value="ES">España</option>
+        <option value="DE">Alemania</option>
+        <option value="FR">Francia</option>
+        <option value="GB">Reino Unido</option>
+        <option value="US">Estados Unidos</option>
+        <option value="OTHER">Otro</option>
+      </select>
+
+      <!-- Detalles del Viaje -->
+      <div class="section-title">Detalles del Viaje</div>
+      <label for="boat">Barco preferido</label>
+      <select id="boat" required>
+        <option value="" disabled selected>Selecciona un barco</option>
+        <option value="DE ANTONIO 32">DE ANTONIO 32 (Lancha a motor)</option>
+        <option value="CRANCHI 41">CRANCHI 41 (Yate a motor)</option>
+        <option value="SEA RAY 280">SEA RAY 280 (Lancha a motor)</option>
+        <option value="AXOPAR 37 Sun-Top">AXOPAR 37 Sun-Top (Yate deportivo)</option>
+        <option value="SUNSEEKER MANHATTAN 63">SUNSEEKER MANHATTAN 63 (Yate de lujo)</option>
+        <!-- Agrega más barcos según la tabla -->
+      </select>
+
+      <label for="destination">Destino</label>
+      <input type="text" id="destination" placeholder="Ejemplo: Cala d'Or, Mallorca" required />
+
+      <label for="origin">Origen</label>
+      <input type="text" id="origin" placeholder="Puerto o ubicación de salida" required />
+
+      <label for="date">Fechas del viaje</label>
+      <input type="date" id="start-date" required />
+      <input type="date" id="end-date" placeholder="Fecha de regreso (opcional)" />
+
+      <label for="time">Hora de salida preferida</label>
+      <input type="time" id="time" required />
+
+      <!-- Preferencias del Servicio -->
+      <div class="section-title">Preferencias del Servicio</div>
+      <label for="passengers">Número de pasajeros</label>
+      <input type="number" id="passengers" min="1" max="20" required />
+
+      <label for="duration">Duración del alquiler</label>
+      <select id="duration" required>
+        <option value="4h">Medio día (4 horas)</option>
+        <option value="8h">Día completo (8 horas)</option>
+        <option value="multi-day">Varios días (especificar)</option>
+      </select>
+
+      <div class="section-title">Servicios Adicionales</div>
+      <div class="checkbox-group">
+        <label><input type="checkbox" name="extras" value="captain"> Patrón profesional</label>
+        <label><input type="checkbox" name="extras" value="drinks"> Pack de bebidas premium</label>
+        <label><input type="checkbox" name="extras" value="snorkel"> Equipo de snorkel</label>
+        <label><input type="checkbox" name="extras" value="paddle"> Paddle surf</label>
+        <label><input type="checkbox" name="extras" value="seabob"> Seabob</label>
+        <label><input type="checkbox" name="extras" value="jetski"> Moto de agua (Jetski)</label>
+      </div>
+
+      <!-- Mensaje Adicional -->
+      <div class="section-title">Comentarios o Solicitudes Especiales</div>
+      <textarea id="comments" rows="4" placeholder="Describe cualquier solicitud adicional o comentario"></textarea>
+
+      <button type="submit">Enviar Solicitud</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('charterForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      let message = "Solicitud de Reserva:\n\n";
+
+      // Recopilar datos del formulario
+      formData.forEach((value, key) => {
+        message += `${key.charAt(0).toUpperCase() + key.slice(1)}: ${value}\n`;
+      });
+
+      // Abrir WhatsApp con el mensaje
+      const encodedMessage = encodeURIComponent(message).slice(0, 600); // Límite opcional
+      window.location.href = `https://wa.me/34644075065?text= ${encodedMessage}`;
+    });
+  </script>
+</body>
+</html>
