@@ -12,28 +12,46 @@
       padding: 0;
     }
     body {
-      background: url('https://drive.google.com/uc?id=19mI_0Khhc0FuP-umHJ-XTyyaOJzXOLo4 ') no-repeat center center fixed;
-      background-size: cover;
-      color: #333;
+      background: #000;
+      color: #fff;
       font-family: 'Inter', sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      margin: 0;
+      padding: 20px;
     }
     .container {
-      background: rgba(255, 255, 255, 0.9); /* Fondo semi-transparente */
+      background: #111;
       border-radius: 14px;
       padding: 30px;
-      max-width: 600px;
+      max-width: 500px;
       width: 100%;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Efecto de sombra */
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+    .lang-selector {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 25px;
+    }
+    .lang-flag {
+      padding: 6px 12px;
+      background: #222;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      opacity: 0.6;
+      transition: 0.2s;
+    }
+    .lang-flag.active,
+    .lang-flag:hover {
+      opacity: 1;
     }
     h1 {
       text-align: center;
-      font-size: 2rem;
-      margin-bottom: 20px;
+      font-size: 1.9rem;
+      margin-bottom: 25px;
     }
     label {
       display: block;
@@ -43,8 +61,9 @@
     select, input, textarea {
       width: 100%;
       padding: 12px;
-      background: #f9f9f9;
-      border: 1px solid #ddd;
+      background: #222;
+      color: #fff;
+      border: none;
       border-radius: 8px;
       font-size: 1rem;
       margin-bottom: 20px;
@@ -68,12 +87,6 @@
       opacity: 0.6;
       cursor: not-allowed;
     }
-    .section-title {
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin-top: 20px;
-      margin-bottom: 10px;
-    }
     .checkbox-group {
       display: flex;
       flex-wrap: wrap;
@@ -86,100 +99,160 @@
 </head>
 <body>
   <div class="container">
-    <h1>Reserva tu Charter Personalizado</h1>
+    <div class="lang-selector">
+      <span id="flag-en" class="lang-flag active">EN</span>
+      <span id="flag-es" class="lang-flag">ES</span>
+      <span id="flag-de" class="lang-flag">GER</span>
+    </div>
+    <h1 id="title">Book Your Charter</h1>
     <form id="charterForm">
       <!-- Información del Cliente -->
-      <div class="section-title">Información del Cliente</div>
-      <label for="fullname">Nombre completo</label>
-      <input type="text" id="fullname" placeholder="Tu nombre completo" required />
+      <label id="label-fullname" for="fullname"></label>
+      <input type="text" id="fullname" placeholder="Full Name" required />
 
-      <label for="email">Correo electrónico</label>
-      <input type="email" id="email" placeholder="ejemplo@correo.com" required />
+      <label id="label-email" for="email"></label>
+      <input type="email" id="email" placeholder="Email Address" required />
 
-      <label for="phone">Número de teléfono</label>
-      <input type="tel" id="phone" placeholder="+XX XXX XXX XXXX" required />
-
-      <label for="country">País de residencia</label>
-      <select id="country" required>
-        <option value="" disabled selected>Selecciona tu país</option>
-        <option value="ES">España</option>
-        <option value="DE">Alemania</option>
-        <option value="FR">Francia</option>
-        <option value="GB">Reino Unido</option>
-        <option value="US">Estados Unidos</option>
-        <option value="OTHER">Otro</option>
-      </select>
+      <label id="label-phone" for="phone"></label>
+      <input type="tel" id="phone" placeholder="WhatsApp Number" required />
 
       <!-- Detalles del Viaje -->
-      <div class="section-title">Detalles del Viaje</div>
-      <label for="boat">Barco preferido</label>
-      <select id="boat" required>
-        <option value="" disabled selected>Selecciona un barco</option>
-        <option value="DE ANTONIO 32">DE ANTONIO 32 (Lancha a motor)</option>
-        <option value="CRANCHI 41">CRANCHI 41 (Yate a motor)</option>
-        <option value="SEA RAY 280">SEA RAY 280 (Lancha a motor)</option>
-        <option value="AXOPAR 37 Sun-Top">AXOPAR 37 Sun-Top (Yate deportivo)</option>
-        <option value="SUNSEEKER MANHATTAN 63">SUNSEEKER MANHATTAN 63 (Yate de lujo)</option>
-        <!-- Agrega más barcos según la tabla -->
-      </select>
+      <label id="label-boat" for="boat"></label>
+      <select id="boat" required></select>
 
-      <label for="destination">Destino</label>
-      <input type="text" id="destination" placeholder="Ejemplo: Cala d'Or, Mallorca" required />
+      <label id="label-destination" for="destination"></label>
+      <input type="text" id="destination" placeholder="Destination" required />
 
-      <label for="origin">Origen</label>
-      <input type="text" id="origin" placeholder="Puerto o ubicación de salida" required />
+      <label id="label-date" for="date"></label>
+      <input type="date" id="date" required />
 
-      <label for="date">Fechas del viaje</label>
-      <input type="date" id="start-date" required />
-      <input type="date" id="end-date" placeholder="Fecha de regreso (opcional)" />
+      <!-- Servicios Adicionales -->
+      <div class="section-title" id="label-extras"></div>
+      <div class="checkbox-group" id="extras-container"></div>
 
-      <label for="time">Hora de salida preferida</label>
-      <input type="time" id="time" required />
-
-      <!-- Preferencias del Servicio -->
-      <div class="section-title">Preferencias del Servicio</div>
-      <label for="passengers">Número de pasajeros</label>
-      <input type="number" id="passengers" min="1" max="20" required />
-
-      <label for="duration">Duración del alquiler</label>
-      <select id="duration" required>
-        <option value="4h">Medio día (4 horas)</option>
-        <option value="8h">Día completo (8 horas)</option>
-        <option value="multi-day">Varios días (especificar)</option>
-      </select>
-
-      <div class="section-title">Servicios Adicionales</div>
-      <div class="checkbox-group">
-        <label><input type="checkbox" name="extras" value="captain"> Patrón profesional</label>
-        <label><input type="checkbox" name="extras" value="drinks"> Pack de bebidas premium</label>
-        <label><input type="checkbox" name="extras" value="snorkel"> Equipo de snorkel</label>
-        <label><input type="checkbox" name="extras" value="paddle"> Paddle surf</label>
-        <label><input type="checkbox" name="extras" value="seabob"> Seabob</label>
-        <label><input type="checkbox" name="extras" value="jetski"> Moto de agua (Jetski)</label>
-      </div>
-
-      <!-- Mensaje Adicional -->
-      <div class="section-title">Comentarios o Solicitudes Especiales</div>
-      <textarea id="comments" rows="4" placeholder="Describe cualquier solicitud adicional o comentario"></textarea>
-
-      <button type="submit">Enviar Solicitud</button>
+      <button type="submit" id="btn-submit">Send via WhatsApp</button>
     </form>
   </div>
 
   <script>
-    document.getElementById('charterForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-      const formData = new FormData(e.target);
-      let message = "Solicitud de Reserva:\n\n";
+    document.addEventListener('DOMContentLoaded', () => {
+      const translations = {
+        en: {
+          title: 'Book Your Charter',
+          fullname: 'Full Name',
+          email: 'Email Address',
+          phone: 'WhatsApp Number',
+          boat: 'Select a Boat',
+          destination: 'Destination',
+          date: 'Travel Date',
+          extras: 'Additional Services',
+          services: ['Captain', 'Drinks Package', 'Snorkel Gear', 'Seabob', 'Jetski'],
+          btn: 'Send via WhatsApp'
+        },
+        es: {
+          title: 'Reserva tu Charter',
+          fullname: 'Nombre Completo',
+          email: 'Correo Electrónico',
+          phone: 'Número de WhatsApp',
+          boat: 'Selecciona un Barco',
+          destination: 'Destino',
+          date: 'Fecha de Viaje',
+          extras: 'Servicios Adicionales',
+          services: ['Patrón', 'Pack de Bebidas', 'Equipo de Snorkel', 'Seabob', 'Moto de Agua'],
+          btn: 'Enviar vía WhatsApp'
+        },
+        de: {
+          title: 'Buchen Sie Ihre Charter',
+          fullname: 'Vollständiger Name',
+          email: 'E-Mail-Adresse',
+          phone: 'WhatsApp-Nummer',
+          boat: 'Boot auswählen',
+          destination: 'Zielort',
+          date: 'Reisedatum',
+          extras: 'Zusätzliche Dienstleistungen',
+          services: ['Kapitän', 'Getränkepaket', 'Schnorchelausrüstung', 'Seabob', 'Jetski'],
+          btn: 'Über WhatsApp senden'
+        }
+      };
 
-      // Recopilar datos del formulario
-      formData.forEach((value, key) => {
-        message += `${key.charAt(0).toUpperCase() + key.slice(1)}: ${value}\n`;
+      function populateSelect(id, options, placeholder) {
+        const select = document.getElementById(id);
+        select.innerHTML = '';
+        const defaultOpt = document.createElement('option');
+        defaultOpt.textContent = placeholder;
+        defaultOpt.value = '';
+        defaultOpt.disabled = true;
+        defaultOpt.selected = true;
+        select.appendChild(defaultOpt);
+        options.forEach(option => {
+          const opt = document.createElement('option');
+          opt.textContent = option;
+          opt.value = option;
+          select.appendChild(opt);
+        });
+      }
+
+      function setLanguage(lang) {
+        const t = translations[lang];
+
+        document.getElementById('title').textContent = t.title;
+        document.getElementById('label-fullname').textContent = t.fullname;
+        document.getElementById('label-email').textContent = t.email;
+        document.getElementById('label-phone').textContent = t.phone;
+        document.getElementById('label-boat').textContent = t.boat;
+        document.getElementById('label-destination').textContent = t.destination;
+        document.getElementById('label-date').textContent = t.date;
+        document.getElementById('label-extras').textContent = t.extras;
+        document.getElementById('btn-submit').textContent = t.btn;
+
+        populateSelect('boat', [
+          'DE ANTONIO 32', 'CRANCHI 41', 'SEA RAY 280', 'AXOPAR 37 Sun-Top', 'SUNSEEKER MANHATTAN 63'
+        ], t.boat);
+
+        const extrasContainer = document.getElementById('extras-container');
+        extrasContainer.innerHTML = '';
+        t.services.forEach(service => {
+          const checkbox = document.createElement('label');
+          checkbox.innerHTML = `<input type="checkbox" name="extras" value="${service}"> ${service}`;
+          extrasContainer.appendChild(checkbox);
+        });
+
+        document.querySelectorAll('.lang-flag').forEach(flag => flag.classList.remove('active'));
+        document.getElementById(`flag-${lang}`).classList.add('active');
+      }
+
+      ['en', 'es', 'de'].forEach(lang => {
+        document.getElementById(`flag-${lang}`).addEventListener('click', () => setLanguage(lang));
       });
 
-      // Abrir WhatsApp con el mensaje
-      const encodedMessage = encodeURIComponent(message).slice(0, 600); // Límite opcional
-      window.location.href = `https://wa.me/34644075065?text= ${encodedMessage}`;
+      setLanguage('en'); // Default
+
+      document.getElementById('charterForm').addEventListener('submit', e => {
+        e.preventDefault();
+        const lang = document.querySelector('.lang-flag.active').id.split('-')[1];
+        const t = translations[lang];
+
+        const message = 
+`${t.title}
+${t.fullname}: ${document.getElementById('fullname').value}
+${t.email}: ${document.getElementById('email').value}
+${t.phone}: ${document.getElementById('phone').value}
+${t.boat}: ${document.getElementById('boat').value}
+${t.destination}: ${document.getElementById('destination').value}
+${t.date}: ${document.getElementById('date').value}
+${t.extras}: ${Array.from(document.querySelectorAll('input[name="extras"]:checked'))
+  .map(cb => cb.value)
+  .join(', ')}`;
+
+        const btn = document.getElementById('btn-submit');
+        btn.disabled = true;
+        btn.textContent = (lang === 'es') ? 'Enviando...' : (lang === 'de') ? 'Senden...' : 'Sending...';
+
+        setTimeout(() => {
+          const encodedMessage = encodeURIComponent(message).slice(0, 600); // Límite opcional
+          window.location.href = `https://wa.me/34644075065?text= ${encodedMessage}`;
+        }, 800);
+      });
     });
   </script>
 </body>
